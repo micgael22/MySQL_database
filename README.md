@@ -71,3 +71,14 @@
 :dolphin: Outer Join Across 3 Tables <br />
 :dolphin: Alias <br />
 :dolphin: Self Join <br />
+
+
+## Screenshots:
+### Customers Table
+<img align="center" width="750" height="500" src="https://user-images.githubusercontent.com/88590240/166156893-6b7ee2e9-c031-49e2-889c-60a6dad7cd13.png">
+
+### Employees Table
+<img align="center" width="750" height="500" src="https://user-images.githubusercontent.com/88590240/166157036-29716cdc-7b10-446d-85a7-ea40b43eda86.png">
+
+### Products Table
+<img align="center" width="550" height="500" src="https://user-images.githubusercontent.com/88590240/166156907-259373b8-a0f0-44cf-b882-46277725ee51.png">
