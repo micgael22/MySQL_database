@@ -192,3 +192,29 @@ OVER (PARTITION BY sex ORDER BY Salary_Rand DESC) AS highest_salary
 FROM employees;
 
 SELECT * FROM employees;
+
+/*Some basic Queries ==============================================*/
+SELECT * FROM territories;
+
+ALTER TABLE territories ADD points DECIMAL(3, 2);
+ALTER TABLE territories DROP COLUMN points;
+
+######### Using AUTO_INCREMENT
+CREATE TABLE employeesTests (
+	emp_id INT AUTO_INCREMENT,
+    emp_name VARCHAR(30),
+    emp_marks INT(20),
+    PRIMARY KEY(emp_id)
+);
+INSERT INTO employeesTests (emp_name, emp_marks)
+VALUE ('Malcom', 50), 
+		('Frank', 80),
+        ('Trevor', 30),
+        ('Cannon', 60)
+;
+SELECT * FROM employeesTests;
+######### Using AUTO_INCREMENT
+
+
+
+
