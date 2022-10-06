@@ -215,6 +215,22 @@ VALUE ('Malcom', 50),
 SELECT * FROM employeesTests;
 ######### Using AUTO_INCREMENT
 
+UPDATE employeesTests
+SET emp_name = 'Roy', emp_marks = '10'
+WHERE emp_id = 4;
 
+SELECT * FROM employeesTests
+ORDER BY emp_marks, emp_name;
+
+SELECT * FROM employeesTests
+ORDER BY emp_id DESC LIMIT 2;
+
+SELECT * FROM products
+WHERE Units_in_Stock <= 13;
+
+SELECT Company_Name AS name, Contact_title AS title
+FROM customers;
+
+SELECT DISTINCT Ship_Country FROM orders;
 
 
