@@ -231,6 +231,99 @@ WHERE Units_in_Stock <= 13;
 SELECT Company_Name AS name, Contact_title AS title
 FROM customers;
 
-SELECT DISTINCT Ship_Country FROM orders;
+SELECT DISTINCT Ship_Country 
+FROM orders;
 
+SELECT COUNT(Reports_to) 
+FROM employees;
 
+SELECT * FROM employees;
+SELECT COUNT(emp_id) 
+FROM employees
+WHERE sex = 'Female' AND Date_of_birth > 1990-01-01;
+
+SELECT SUM(Salary_Rand) FROM employees;
+
+SELECT COUNT(Sex), sex
+FROM employees
+GROUP BY Sex;
+
+###WILD CARD
+SELECT * FROM orders
+WHERE Ship_Adress LIKE '%am';
+
+SELECT * FROM employees
+WHERE Date_of_birth
+LIKE '____-04%';
+
+SELECT  Ship_Name, Customer_ID
+FROM orders
+UNION
+SELECT Company_Name, Customer_ID
+FROM customers;
+
+SELECT Salary_Rand
+FROM employees
+UNION
+SELECT Territory_ID
+FROM employees_territory;
+
+SELECT MAX(Unit_Price) AS product_Max
+FROM products; 
+
+SELECT MIN(Unit_Price) AS Cheapest_product  
+FROM products;
+
+SELECT emp_id, Last_name FROM employees
+WHERE City = 'West Coast' ORDER BY emp_id ASC;
+
+SELECT Last_name, Date_of_birth FROM employees 
+WHERE Date_of_birth >= 1995-01-01
+GROUP BY Last_name, Date_of_birth ORDER BY Last_name;
+
+SELECT COUNT(Salary_Rand), Salary_Rand FROM employees  
+WHERE Salary_Rand < 25000 GROUP BY Salary_Rand ORDER BY Salary_Rand
+
+SELECT COUNT(Supplier_ID), Country 
+FROM suppliers GROUP BY Country;
+
+SELECT SUM(Order_ID)
+FROM orders WHERE Freight > 2.1000;
+
+CREATE VIEW ordersfreight_High AS
+SELECT Ship_Name, Order_ID
+FROM orders
+WHERE Freight > 2.1000;
+
+CREATE VIEW ordersfreight_low AS
+SELECT Ship_Name, Order_ID
+FROM orders
+WHERE Freight < 2.1000;
+
+CREATE VIEW  Product_List AS
+SELECT Product_ID, Product_Name, Category_ID
+FROM products
+WHERE Discontinued = False;
+
+SELECT Customer_ID FROM customers INNER
+JOIN orders ON customers.orders_ID = orders.customer_ID;
+
+SELECT Product_Name, Unit_Price * 
+(Units_in_Stock + IFNULL(Units_in_Order, 0)) 
+FROM products;
+
+SELECT Product_ID, Reorder_Level, Unit_Price,
+DENSE_RANK() OVER (PARTITION BY Reorder_Level ORDER BY Unit_Price) AS ranking
+FROM products;
+
+SELECT Emp_ID, Email, Salary_Rand,
+AVG(Salary_Rand) OVER () AS avg_sal
+FROM employees;
+
+SELECT Product_ID, Product_Name, Units_in_Stock, Unit_Price,
+       MIN(Unit_Price) OVER (PARTITION BY Units_in_Stock) AS min_result
+FROM products;
+
+SELECT Product_ID, Product_Name, Units_in_Stock, Unit_Price,
+       MAX(Unit_Price) OVER () AS max_result
+FROM   products;
