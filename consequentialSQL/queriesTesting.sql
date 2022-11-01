@@ -124,7 +124,79 @@ SELECT Product_Name FROM products
 WHERE Product_ID = ALL
 (SELECT Product_ID FROM products
 WHERE Unit_price > 350);
+-- ===============================================
 
--- 30. Writing Developer Friendly SQL
+-- 36.Conditional Subquery Results
+SELECT Ship_Name FROM Orders WHERE EXISTS 
+(SELECT Product_Name FROM Products 
+WHERE Products_ID.Products_ID =order_ID.order_ID 
+AND Units_in_Order < 80);
 
+-- 37. Copying Selections from Table to Table
+INSERT INTO order_details 
+SELECT * FROM orders
+WHERE Freight <= 80;
 
+-- =================================================
+
+-- 38. Catching NULL Results
+SELECT Product_Name, Unit_Price * 
+(Units_in_Stock + IFNULL(Units_in_Order, 0)) 
+FROM Products;
+
+-- 39. HAVING can be Relieving!
+SELECT COUNT(Customer_ID), Region
+FROM Customers
+GROUP BY Region
+HAVING COUNT(Customer_ID) > 0;
+
+	
+SELECT SUBSTRING_INDEX("www.bytescout.com", ".", 2);
+
+-- 41. Use COALESCE to return the first non-null expression
+SELECT COALESCE(NULL,NULL,'ByteScout',NULL,'Byte');
+
+-- 42. Use Convert to transform any value into a particular datatype
+-- SELECT CONVERT(INT, 27.64);
+
+-- 43. DENSE_RANK()Analytical query
+SELECT Product_ID, Category_ID, Reorder_Level, Unit_Price,
+DENSE_RANK() OVER 
+(PARTITION BY Reorder_Level ORDER BY Unit_Price)
+ AS Ranking FROM Products;
+
+-- 44. Query_partition_clause
+SELECT Product_Name, Supplier_ID, Units_in_Stock,
+AVG(Units_in_Stock) OVER () AS avg_stock
+FROM products;
+
+-- 45. Finding the last five records from the table
+-- Select * from Employees AS emp where row_number =< 8
+-- union
+-- select * from 
+-- (Select * from Employees order by Emp_ID desc) 
+-- where row_number <=8;
+
+-- 46. LAG
+SELECT Product_ID, Product_Name, Discontinued, Unit_Price,
+LAG(Unit_Price, 1, 0) OVER 
+(PARTITION BY Discontinued ORDER BY Unit_Price)
+AS prev_price
+FROM products;
+
+-- 47. LEAD
+SELECT Product_ID, Product_Name, Discount, Unit_Price,
+LEAD(Unit_Price, 1, 0) OVER (ORDER BY Unit_Price) 
+AS price_next,
+LEAD(Unit_Price, 1, 0) OVER (ORDER BY Unit_Price) 
+- Unit_Price AS price_diff
+FROM products;
+
+-- 48. PERCENT_RANK
+SELECT Product_ID, SUM(Unit_Price),
+PERCENT_RANK() OVER (ORDER BY SUM(Unit_Price) DESC)
+AS percent_Ranking FROM Products
+GROUP BY Product_ID
+ORDER BY Product_ID;
+
+SELECT * FROM products;
